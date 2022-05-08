@@ -6,7 +6,16 @@
 </template>
 
 <script>
+export default{
+    mounted(){
+        for(node of this.$el.children){
+            let name = node.nodeName.toLowerCase()
+            if( name !== 'button'){
 
+            }
+        }
+    }
+}
 </script>
 
 <style lang="scss">
