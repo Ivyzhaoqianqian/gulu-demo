@@ -131,7 +131,7 @@ if ("production" === 'production') {
 } else {
   module.exports = require('./vue.common.dev.js');
 }
-},{"./vue.common.prod.js":"BydX"}],"Bqhn":[function(require,module,exports) {
+},{"./vue.common.prod.js":"BydX"}],"rWcA":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -144,31 +144,63 @@ exports.default = void 0;
 //
 //
 //
+//
 var _default = {
-  props: ['name']
+  name: 'Gulurow',
+  props: {
+    gutter: {
+      type: [Number, String]
+    },
+    align: {
+      type: String,
+      validator: function validator(value) {
+        return ['left', 'right', 'center'].includes(value);
+      }
+    }
+  },
+  computed: {
+    rowStyle: function rowStyle() {
+      var gutter = this.gutter;
+      return {
+        marginLeft: -gutter / 2 + 'px',
+        marginRight: -gutter / 2 + 'px'
+      };
+    },
+    rowClass: function rowClass() {
+      var align = this.align;
+      return [align && "align-".concat(align)];
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$children.forEach(function (vm) {
+      vm.gutter = _this.gutter;
+    });
+  }
 };
 exports.default = _default;
-        var $e5216b = exports.default || module.exports;
+        var $d239e7 = exports.default || module.exports;
       
-      if (typeof $e5216b === 'function') {
-        $e5216b = $e5216b.options;
+      if (typeof $d239e7 === 'function') {
+        $d239e7 = $d239e7.options;
       }
     
         /* template */
-        Object.assign($e5216b, (function () {
-          var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('svg',{staticClass:"g-icon"},[_c('use',{attrs:{"xlink:href":("#i" + _vm.name)}})])}
+        Object.assign($d239e7, (function () {
+          var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"row",class:_vm.rowClass,style:(_vm.rowStyle)},[_vm._t("default")],2)}
 var staticRenderFns = []
 
           return {
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-e5216b",
+            _scopeId: "data-v-d239e7",
             functional: undefined
           };
         })());
       
-},{}],"eGlL":[function(require,module,exports) {
+},{}],"sOCM":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -176,9 +208,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _icon = _interopRequireDefault(require("./icon"));
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 //
 //
@@ -187,145 +227,168 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
+var validator = function validator(value) {
+  var keys = Object.keys(value);
+  var valid = true;
+  keys.forEach(function (key) {
+    if (!['span', 'offset'].includes(key)) {
+      valid = false;
+    }
+  });
+  return valid;
+};
+
 var _default = {
-  components: {
-    Icon: _icon.default
-  },
-  name: 'GuluInput',
+  name: 'GuluCol',
   props: {
-    value: {
-      type: String
+    span: {
+      type: [Number, String]
     },
-    disabled: {
-      type: Boolean,
-      default: false
+    offset: {
+      type: [Number, String]
     },
-    readonly: {
-      type: Boolean,
-      default: false
+    ipad: {
+      type: Object,
+      validator: validator
     },
-    error: {
-      type: String
+    narrowPc: {
+      type: Object,
+      validator: validator
+    },
+    pc: {
+      type: Object,
+      validator: validator
+    },
+    widePc: {
+      type: Object,
+      validator: validator
+    }
+  },
+  data: function data() {
+    return {
+      gutter: 0
+    };
+  },
+  methods: {
+    createClasses: function createClasses(obj) {
+      var str = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+      if (!obj) {
+        return [];
+      }
+
+      var array = [];
+
+      if (obj.span) {
+        array.push("col-".concat(str).concat(obj.span));
+      }
+
+      if (obj.offset) {
+        array.push("offset-".concat(str).concat(obj.span));
+      }
+
+      return array;
+    }
+  },
+  computed: {
+    colClass: function colClass() {
+      var span = this.span,
+          offset = this.offset,
+          ipad = this.ipad,
+          narrowPc = this.narrowPc,
+          pc = this.pc,
+          widePc = this.widePc;
+      var createClasses = this.createClasses;
+      return [].concat(_toConsumableArray(createClasses({
+        span: span,
+        offset: offset
+      })), _toConsumableArray(createClasses(ipad, 'ipad-')), _toConsumableArray(createClasses(narrowPc, 'narrow-pc-')), _toConsumableArray(createClasses(pc, 'pc-')), _toConsumableArray(createClasses(widePc, 'wide-pc-')));
+    },
+    colStyle: function colStyle() {
+      return {
+        paddingLeft: this.gutter / 2 + 'px',
+        paddingRight: this.gutter / 2 + 'px'
+      };
     }
   }
 };
 exports.default = _default;
-        var $e5db3f = exports.default || module.exports;
+        var $5f4ba3 = exports.default || module.exports;
       
-      if (typeof $e5db3f === 'function') {
-        $e5db3f = $e5db3f.options;
+      if (typeof $5f4ba3 === 'function') {
+        $5f4ba3 = $5f4ba3.options;
       }
     
         /* template */
-        Object.assign($e5db3f, (function () {
-          var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"wrapper",class:{error: _vm.error}},[_c('input',{attrs:{"type":"text","disabled":_vm.disabled,"readonly":_vm.readonly},domProps:{"value":_vm.value},on:{"change":function($event){return _vm.$emit('change',$event.target.value)},"input":function($event){return _vm.$emit('input',$event.target.value)},"focus":function($event){return _vm.$emit('focus',$event.target.value)},"blur":function($event){return _vm.$emit('blur',$event.target.value)}}}),_vm._v(" "),(_vm.error)?[_c('icon',{staticClass:"icon-error",attrs:{"name":"error"}}),_vm._v(" "),_c('span',{staticClass:"errorMessage"},[_vm._v(_vm._s(_vm.error))])]:_vm._e()],2)}
+        Object.assign($5f4ba3, (function () {
+          var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"col",class:_vm.colClass,style:(_vm.colStyle)},[_vm._t("default")],2)}
 var staticRenderFns = []
 
           return {
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-e5db3f",
+            _scopeId: "data-v-5f4ba3",
             functional: undefined
           };
         })());
       
-},{"./icon":"Bqhn"}],"spTe":[function(require,module,exports) {
+},{}],"Tgvo":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));
 
-var _input = _interopRequireDefault(require("../src/input"));
+var _row = _interopRequireDefault(require("../src/row"));
+
+var _col = _interopRequireDefault(require("../src/col"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var expect = chai.expect;
 _vue.default.config.productionTip = false;
 _vue.default.config.devtools = false;
-describe('Input', function () {
+describe('Row', function () {
   it('存在.', function () {
-    expect(_input.default).to.be.exist;
+    expect(_row.default).to.be.exist;
   });
-  describe('props', function () {
-    var Constructor = _vue.default.extend(_input.default);
+  it('接收gutter属性.', function (down) {
+    _vue.default.component('g-row', _row.default);
 
-    var vm;
-    afterEach(function () {
+    _vue.default.component('g-col', _col.default);
+
+    var div = document.createElement('div');
+    document.body.appendChild(div);
+    div.innerHTML = "\n            <g-row gutter=\"20\">\n                <g-col span=\"12\"></g-col>\n                <g-col span=\"12\"></g-col>\n            </g-row>\n        ";
+    var vm = new _vue.default({
+      el: div
+    });
+    setTimeout(function () {
+      var row = vm.$el.querySelector('.row');
+      expect(getComputedStyle(row).marginRight).to.eq('-10px');
+      expect(getComputedStyle(row).marginLeft).to.eq('-10px');
+      var cols = vm.$el.querySelectorAll('.col');
+      expect(getComputedStyle(cols[0]).paddingRight).to.eq('10px');
+      expect(getComputedStyle(cols[1]).paddingLeft).to.eq('10px');
+      down();
+      vm.$el.remove();
       vm.$destroy();
     });
-    it('接收 value', function () {
-      vm = new Constructor({
-        propsData: {
-          value: '1234'
-        }
-      }).$mount();
-      var inputElement = vm.$el.querySelector('input');
-      expect(inputElement.value).to.equal('1234');
-    });
-    it('接收 disabled', function () {
-      vm = new Constructor({
-        propsData: {
-          disabled: true
-        }
-      }).$mount();
-      var inputElement = vm.$el.querySelector('input');
-      expect(inputElement.disabled).to.equal(true);
-    });
-    it('接收 readonly', function () {
-      vm = new Constructor({
-        propsData: {
-          readonly: true
-        }
-      }).$mount();
-      var inputElement = vm.$el.querySelector('input');
-      expect(inputElement.readOnly).to.equal(true);
-    });
-    it('接收 error', function () {
-      vm = new Constructor({
-        propsData: {
-          error: '你错了'
-        }
-      }).$mount();
-      var useElement = vm.$el.querySelector('use');
-      expect(useElement.getAttribute('xlink:href')).to.equal('#ierror');
-      var errorMessage = vm.$el.querySelector('.errorMessage');
-      expect(errorMessage.innerText).to.equal('你错了');
-    });
   });
-  describe('事件', function () {
-    var Constructor = _vue.default.extend(_input.default);
+  it('接收align属性', function () {
+    var div = document.createElement('div');
+    document.body.appendChild(div);
 
-    var vm;
-    afterEach(function () {
-      vm.$destroy();
-    });
-    it('支持 change/input/focus/blur 事件', function () {
-      ['change', 'input', 'focus', 'blur'].forEach(function (eventName) {
-        vm = new Constructor({}).$mount();
-        var callback = sinon.fake();
-        vm.$on(eventName, callback); //触发input的change 事件
+    var Constructor = _vue.default.extend(_row.default);
 
-        var event = new Event(eventName);
-        Object.defineProperty(event, 'target', {
-          value: {
-            value: 'hi'
-          },
-          enumerable: true
-        });
-        var inputElement = vm.$el.querySelector('input');
-        inputElement.dispatchEvent(event);
-        expect(callback).to.have.been.calledWith('hi');
-      });
-    });
+    var vm = new Constructor({
+      propsData: {
+        align: 'right'
+      }
+    }).$mount(div);
+    var element = vm.$el;
+    expect(getComputedStyle(element).justifyContent).to.equal('flex-end');
+    vm.$destroy();
   });
 });
-},{"vue":"ApMz","../src/input":"eGlL"}]},{},["spTe"], null)
-//# sourceMappingURL=/input.test.js.map
+},{"vue":"ApMz","../src/row":"rWcA","../src/col":"sOCM"}]},{},["Tgvo"], null)
+//# sourceMappingURL=/row.test.js.map
