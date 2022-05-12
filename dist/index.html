@@ -40,8 +40,13 @@
 <body>
     <style>.demoBox {
             height: 50px;
-            background-color: #ccc;
+
             border: 1px solid red;
+        }
+
+        .box1 {
+            border: 1px solid red;
+            min-height: 100px;
         }</style>
 
     <div id="app">
@@ -97,7 +102,14 @@
 
         </div>
 
-
+        <g-layout style="height: 100vh;">
+            <g-sider class="box1">sider</g-sider>
+            <g-layout>
+                <g-header class="box1">header</g-header>
+                <g-content class="box1">content</g-content>
+                <g-footer class="box1">footer</g-footer>
+            </g-layout>
+        </g-layout>
 
     </div>
 
