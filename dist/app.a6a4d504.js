@@ -13486,10 +13486,78 @@ exports.default = void 0;
 //
 //
 //
-var _default = {
-  name: 'GuleToast'
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default2 = {
+  name: 'GuleToast',
+  props: {
+    autoClose: {
+      type: Boolean,
+      default: false
+    },
+    autoCloseDelay: {
+      type: Number,
+      default: 5
+    },
+    closeButton: {
+      type: Object,
+      default: function _default() {
+        return {
+          text: '关闭',
+          callback: function callback(toast) {
+            toast.close();
+          }
+        };
+      },
+      enableHtml: {
+        type: Boolean,
+        default: false
+      }
+    }
+  },
+  created: function created() {},
+  mounted: function mounted() {
+    this.exacAutoClose();
+    this.updateStyles();
+  },
+  methods: {
+    updateStyles: function updateStyles() {
+      var _this = this;
+
+      this.$nextTick(function () {
+        _this.$refs.line.style.height = "".concat(_this.$refs.wrapper.getBoundingClientRect().height, "px");
+      });
+    },
+    exacAutoClose: function exacAutoClose() {
+      var _this2 = this;
+
+      if (this.autoClose) {
+        setTimeout(function () {
+          _this2.close();
+        }, this.autoCloseDelay * 1000);
+      }
+    },
+    close: function close() {
+      this.$el.remove();
+      this.$destroy();
+    },
+    onClickClose: function onClickClose() {
+      this.close();
+
+      if (this.closeButton && typeof this.closeButton.callback === 'function') {
+        this.closeButton.callback();
+      }
+    }
+  }
 };
-exports.default = _default;
+exports.default = _default2;
         var $11b4f8 = exports.default || module.exports;
       
       if (typeof $11b4f8 === 'function') {
@@ -13502,7 +13570,28 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "toast" }, [_vm._t("default")], 2)
+  return _c("div", { ref: "wrapper", staticClass: "toast" }, [
+    _c(
+      "div",
+      { staticClass: "message" },
+      [
+        !_vm.enableHtml
+          ? _vm._t("default")
+          : _c("div", {
+              domProps: { innerHTML: _vm._s(_vm.$slots.default[0]) },
+            }),
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { ref: "line", staticClass: "line" }),
+    _vm._v(" "),
+    _vm.closeButton
+      ? _c("span", { staticClass: "close", on: { click: _vm.onClickClose } }, [
+          _vm._v("\n        " + _vm._s(_vm.closeButton.text) + "\n       "),
+        ])
+      : _vm._e(),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -13551,9 +13640,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _default = {
   install: function install(Vue, options) {
-    Vue.prototype.$toast = function (message) {
+    Vue.prototype.$toast = function (message, toastOptions) {
       var Constructor = Vue.extend(_toast.default);
-      var toast = new Constructor();
+      var toast = new Constructor({
+        propsData: toastOptions
+      });
       toast.$slots.default = [message];
       toast.$mount();
       document.body.appendChild(toast.$el);
@@ -13620,6 +13711,7 @@ _vue.default.component('g-toast', _toast.default);
 
 _vue.default.use(_plugin.default);
 
+var h = _vue.default;
 new _vue.default({
   el: '#app',
   data: {
@@ -13628,11 +13720,13 @@ new _vue.default({
     loading3: false,
     message: 'hi'
   },
-  created: function created() {},
+  created: function created() {
+    this.$toast('文字', {
+      enableHtml: false
+    });
+  },
   methods: {
-    showToast: function showToast() {
-      this.$toast('我是 message');
-    }
+    showToast: function showToast() {}
   }
 });
 },{"vue":"node_modules/vue/dist/vue.common.js","./button":"src/button.vue","./icon":"src/icon.vue","./button-group":"src/button-group.vue","./input":"src/input.vue","./row":"src/row.vue","./col":"src/col.vue","./layout":"src/layout.vue","./header":"src/header.vue","./sider":"src/sider.vue","./content":"src/content.vue","./footer":"src/footer.vue","./toast":"src/toast.vue","./plugin":"src/plugin.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

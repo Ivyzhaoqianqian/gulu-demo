@@ -887,3 +887,15 @@
   color: white;
   padding: 0 16px;
 }
+.toast .close[data-v-11b4f8] {
+  padding-left: 16px;
+  flex-shrink: 0;
+}
+.toast .line[data-v-11b4f8] {
+  height: 100%;
+  border-left: 1px solid #666;
+  margin-left: 16px;
+}
+.toast .message[data-v-11b4f8] {
+  padding: 8px 0;
+}
