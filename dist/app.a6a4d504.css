@@ -854,6 +854,20 @@
 .layout.hasSider[data-v-b524c0] {
   flex-direction: row;
 }
+.sider[data-v-4a7ee2] {
+  position: relative;
+}
+.sider > button[data-v-4a7ee2] {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.sider .slide-enter-active[data-v-4a7ee2], .sider .slide-leave-active[data-v-4a7ee2] {
+  transition: all 0.5s;
+}
+.sider .slide-enter[data-v-4a7ee2], .sider .slide-leave-to[data-v-4a7ee2] {
+  margin-left: -200px;
+}
 .content[data-v-09724a] {
   flex-grow: 1;
 }
