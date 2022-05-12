@@ -2,8 +2,6 @@
     <div class="col" :class="colClass" :style="colStyle">
       <slot></slot>
     </div>
-    
-    
 </template>
 <script>
  let validator = (value) => {
@@ -44,7 +42,7 @@ export default{
                 array.push(`col-${str}${obj.span}`)
             }
             if(obj.offset){
-                array.push(`offset-${str}${obj.span}`)
+                array.push(`offset-${str}${obj.offset}`)
             }
             return array
         }

@@ -225,8 +225,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
 var validator = function validator(value) {
   var keys = Object.keys(value);
   var valid = true;
@@ -284,7 +282,7 @@ var _default = {
       }
 
       if (obj.offset) {
-        array.push("offset-".concat(str).concat(obj.span));
+        array.push("offset-".concat(str).concat(obj.offset));
       }
 
       return array;
@@ -379,7 +377,27 @@ describe('Col', function () {
       }
     }).$mount(div);
     var element = vm.$el;
-    expect(vm.$el.classList.contains('offset-1')).to.eq(false);
+    expect(vm.$el.classList.contains('offset-1')).to.eq(true);
+    div.remove();
+    vm.$destroy();
+  });
+  it('接收 ipad 属性', function () {
+    var div = document.createElement('div');
+    document.body.appendChild(div);
+
+    var Constructor = _vue.default.extend(_col.default);
+
+    var vm = new Constructor({
+      propsData: {
+        ipad: {
+          span: 1,
+          offset: 2
+        }
+      }
+    }).$mount(div);
+    var element = vm.$el;
+    expect(vm.$el.classList.contains('col-ipad-1')).to.eq(true);
+    expect(vm.$el.classList.contains('offset-ipad-2')).to.eq(true);
     div.remove();
     vm.$destroy();
   });
@@ -400,6 +418,46 @@ describe('Col', function () {
     var element = vm.$el;
     expect(vm.$el.classList.contains('col-pc-1')).to.eq(true);
     expect(vm.$el.classList.contains('offset-pc-2')).to.eq(true);
+    div.remove();
+    vm.$destroy();
+  });
+  it('接收 narrowPc 属性', function () {
+    var div = document.createElement('div');
+    document.body.appendChild(div);
+
+    var Constructor = _vue.default.extend(_col.default);
+
+    var vm = new Constructor({
+      propsData: {
+        narrowPc: {
+          span: 1,
+          offset: 2
+        }
+      }
+    }).$mount(div);
+    var element = vm.$el;
+    expect(vm.$el.classList.contains('col-narrow-pc-1')).to.eq(true);
+    expect(vm.$el.classList.contains('offset-narrow-pc-2')).to.eq(true);
+    div.remove();
+    vm.$destroy();
+  });
+  it('接收 wide-pc 属性', function () {
+    var div = document.createElement('div');
+    document.body.appendChild(div);
+
+    var Constructor = _vue.default.extend(_col.default);
+
+    var vm = new Constructor({
+      propsData: {
+        widePc: {
+          span: 1,
+          offset: 2
+        }
+      }
+    }).$mount(div);
+    var element = vm.$el;
+    expect(vm.$el.classList.contains('col-wide-pc-1')).to.eq(true);
+    expect(vm.$el.classList.contains('offset-wide-pc-2')).to.eq(true);
     div.remove();
     vm.$destroy();
   });

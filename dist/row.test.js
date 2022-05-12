@@ -225,8 +225,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
 var validator = function validator(value) {
   var keys = Object.keys(value);
   var valid = true;
@@ -284,7 +282,7 @@ var _default = {
       }
 
       if (obj.offset) {
-        array.push("offset-".concat(str).concat(obj.span));
+        array.push("offset-".concat(str).concat(obj.offset));
       }
 
       return array;
