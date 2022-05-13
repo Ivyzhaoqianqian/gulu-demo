@@ -42,7 +42,16 @@ new Vue({
     },
     created() {
         this.$toast('文字', {
-            enableHtml: false
+            position: 'bottom',
+            enableHtml: false,
+            closeButton: {
+                text: '关闭',
+                callback() {
+
+                }
+            },
+            autoClose: false,
+            autoCloseDelay: 3
         })
     },
     methods: {

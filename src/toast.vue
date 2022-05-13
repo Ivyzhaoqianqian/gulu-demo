@@ -1,5 +1,5 @@
 <template>
-    <div class="toast" ref="wrapper">
+    <div class="toast" ref="wrapper" :class="toastClasses">
         <div class="message">
 <slot v-if="!enableHtml"></slot>
         <div v-else v-html="$slots.default[0]"></div>
@@ -34,9 +34,16 @@ export default {
                     }
                 }
             },
-            enableHtml:{
+        },
+        enableHtml:{
                 type:Boolean,
                 default:false
+        },
+        position:{
+            type:String,
+            default:'top',
+            validator(value){
+                return ['top','bottom','middle'].indexOf(value)>=0
             }
         }
     },
@@ -46,6 +53,13 @@ export default {
     mounted(){
         this.exacAutoClose()
         this.updateStyles()
+    },
+    computed: {
+      toastClasses () {
+        return {
+          [`position-${this.position}`]: true
+        }
+      }
     },
     
     methods:{
@@ -90,9 +104,6 @@ $toast-bg:rgba(0,0,0,0.75);
         line-height: 1.8;
         height: $toast-min-height;
         position: fixed;
-        top: 0;
-        left: 50%;
-        transform:translateX(-50%);
         display: flex;
         align-items: center;
         background:$toast-bg ;  
@@ -100,6 +111,7 @@ $toast-bg:rgba(0,0,0,0.75);
         box-shadow: 0 0 3px 0 rgba(0,0,0,0.5);
         color:white;
         padding: 0 16px;
+        left: 50%;
     .close{
         padding-left: 16px;
         flex-shrink: 0;
@@ -111,6 +123,20 @@ $toast-bg:rgba(0,0,0,0.75);
     }
     .message{
         padding: 8px 0;
+    }
+
+    &.position-top{
+        transform:translateX(-50%);
+        top: 0;
+    }
+    &.position-bottom{
+        transform:translateX(-50%);
+        bottom :0;
+    }
+
+    &.position-middle{
+        transform:translate(-50%,-50%);
+        top:50%;
     }
     }
     
