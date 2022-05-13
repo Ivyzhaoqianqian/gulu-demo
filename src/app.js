@@ -41,22 +41,22 @@ new Vue({
         message: 'hi'
     },
     created() {
-        this.$toast('文字', {
-            position: 'bottom',
-            enableHtml: false,
-            closeButton: {
-                text: '关闭',
-                callback() {
 
-                }
-            },
-            autoClose: false,
-            autoCloseDelay: 3
-        })
     },
     methods: {
         showToast() {
+            this.$toast('文字', {
+                position: 'bottom',
+                enableHtml: false,
+                closeButton: {
+                    text: '关闭',
+                    callback() {
 
+                    }
+                },
+                autoClose: false,
+                autoCloseDelay: 3
+            })
         }
     }
 })

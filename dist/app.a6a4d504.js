@@ -13659,20 +13659,35 @@ var _toast = _interopRequireDefault(require("./toast"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var currentToast;
 var _default = {
   install: function install(Vue, options) {
     Vue.prototype.$toast = function (message, toastOptions) {
-      var Constructor = Vue.extend(_toast.default);
-      var toast = new Constructor({
+      if (currentToast) {
+        currentToast.close();
+      }
+
+      currentToast = createToast({
+        Vue: Vue,
+        message: message,
         propsData: toastOptions
       });
-      toast.$slots.default = [message];
-      toast.$mount();
-      document.body.appendChild(toast.$el);
     };
   }
 };
 exports.default = _default;
+
+function createToast(_ref) {
+  var Vue = _ref.Vue,
+      message = _ref.message,
+      propsData = _ref.propsData;
+  var Constructor = Vue.extend(_toast.default);
+  var toast = new Constructor(propsData);
+  toast.$slots.default = [message];
+  toast.$mount();
+  document.body.appendChild(toast.$el);
+  return toast;
+}
 },{"./toast":"src/toast.vue"}],"src/app.js":[function(require,module,exports) {
 "use strict";
 
@@ -13741,20 +13756,20 @@ new _vue.default({
     loading3: false,
     message: 'hi'
   },
-  created: function created() {
-    this.$toast('文字', {
-      position: 'bottom',
-      enableHtml: false,
-      closeButton: {
-        text: '关闭',
-        callback: function callback() {}
-      },
-      autoClose: false,
-      autoCloseDelay: 3
-    });
-  },
+  created: function created() {},
   methods: {
-    showToast: function showToast() {}
+    showToast: function showToast() {
+      this.$toast('文字', {
+        position: 'bottom',
+        enableHtml: false,
+        closeButton: {
+          text: '关闭',
+          callback: function callback() {}
+        },
+        autoClose: false,
+        autoCloseDelay: 3
+      });
+    }
   }
 });
 },{"vue":"node_modules/vue/dist/vue.common.js","./button":"src/button.vue","./icon":"src/icon.vue","./button-group":"src/button-group.vue","./input":"src/input.vue","./row":"src/row.vue","./col":"src/col.vue","./layout":"src/layout.vue","./header":"src/header.vue","./sider":"src/sider.vue","./content":"src/content.vue","./footer":"src/footer.vue","./toast":"src/toast.vue","./plugin":"src/plugin.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -13785,7 +13800,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "8360" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "9133" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
