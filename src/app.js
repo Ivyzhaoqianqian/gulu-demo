@@ -44,9 +44,18 @@ new Vue({
 
     },
     methods: {
-        showToast() {
+        showToast1() {
+            this.showToast('top')
+        },
+        showToast2() {
+            this.showToast('middle')
+        },
+        showToast3() {
+            this.showToast('bottom')
+        },
+        showToast(position) {
             this.$toast('文字', {
-                position: 'bottom',
+                position,
                 enableHtml: false,
 
                 closeButton: {
