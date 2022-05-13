@@ -13682,6 +13682,8 @@ var _default = {
     };
   }
 };
+/* helpers */
+
 exports.default = _default;
 
 function createToast(_ref) {
@@ -13690,10 +13692,12 @@ function createToast(_ref) {
       propsData = _ref.propsData,
       onClose = _ref.onClose;
   var Constructor = Vue.extend(_toast.default);
-  var toast = new Constructor(propsData);
+  var toast = new Constructor({
+    propsData: propsData
+  });
   toast.$slots.default = [message];
   toast.$mount();
-  toast.$on('close,onClose');
+  toast.$on('close', onClose);
   document.body.appendChild(toast.$el);
   return toast;
 }
