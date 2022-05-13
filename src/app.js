@@ -63,8 +63,7 @@ new Vue({
                     callback() {
                     }
                 },
-                autoClose: false,
-                autoCloseDelay: 3
+                autoClose: 3
             })
         }
     }

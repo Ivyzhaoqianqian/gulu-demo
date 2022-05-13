@@ -13504,12 +13504,15 @@ var _default2 = {
   name: 'GuleToast',
   props: {
     autoClose: {
-      type: Boolean,
-      default: false
-    },
-    autoCloseDelay: {
-      type: Number,
-      default: 5
+      type: [Boolean, Number],
+      default: 5,
+      validator: function validator(value) {
+        if (value === false || typeof value === 'number') {
+          return true;
+        } else {
+          return false;
+        }
+      }
     },
     closeButton: {
       type: Object,
@@ -13558,7 +13561,7 @@ var _default2 = {
       if (this.autoClose) {
         setTimeout(function () {
           _this2.close();
-        }, this.autoCloseDelay * 1000);
+        }, this.autoClose * 1000);
       }
     },
     close: function close() {
@@ -13682,8 +13685,6 @@ var _default = {
     };
   }
 };
-/* helpers */
-
 exports.default = _default;
 
 function createToast(_ref) {
@@ -13788,8 +13789,7 @@ new _vue.default({
           text: '关闭',
           callback: function callback() {}
         },
-        autoClose: false,
-        autoCloseDelay: 3
+        autoClose: 3
       });
     }
   }

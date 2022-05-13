@@ -131,13 +131,16 @@ if ("production" === 'production') {
 } else {
   module.exports = require('./vue.common.dev.js');
 }
-},{"./vue.common.prod.js":"BydX"}],"rWcA":[function(require,module,exports) {
+},{"./vue.common.prod.js":"BydX"}],"dgLN":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -145,322 +148,194 @@ exports.default = void 0;
 //
 //
 //
-var _default = {
-  name: 'Gulurow',
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default2 = {
+  name: 'GuleToast',
   props: {
-    gutter: {
-      type: [Number, String]
-    },
-    align: {
-      type: String,
+    autoClose: {
+      type: [Boolean, Number],
+      default: 5,
       validator: function validator(value) {
-        return ['left', 'right', 'center'].indexOf(value) >= 0;
+        if (value === false || typeof value === 'number') {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    closeButton: {
+      type: Object,
+      default: function _default() {
+        return {
+          text: '关闭',
+          callback: function callback(toast) {
+            toast.close();
+          }
+        };
+      }
+    },
+    enableHtml: {
+      type: Boolean,
+      default: false
+    },
+    position: {
+      type: String,
+      default: 'top',
+      validator: function validator(value) {
+        return ['top', 'bottom', 'middle'].indexOf(value) >= 0;
       }
     }
+  },
+  created: function created() {},
+  mounted: function mounted() {
+    this.updateStyles();
+    this.execAutoClose();
   },
   computed: {
-    rowStyle: function rowStyle() {
-      var gutter = this.gutter;
-      return {
-        marginLeft: -gutter / 2 + 'px',
-        marginRight: -gutter / 2 + 'px'
-      };
-    },
-    rowClass: function rowClass() {
-      var align = this.align;
-      return [align && "align-".concat(align)];
+    toastClasses: function toastClasses() {
+      return _defineProperty({}, "position-".concat(this.position), true);
     }
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    this.$children.forEach(function (vm) {
-      vm.gutter = _this.gutter;
-    });
-  }
-};
-exports.default = _default;
-        var $d239e7 = exports.default || module.exports;
-      
-      if (typeof $d239e7 === 'function') {
-        $d239e7 = $d239e7.options;
-      }
-    
-        /* template */
-        Object.assign($d239e7, (function () {
-          var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"row",class:_vm.rowClass,style:(_vm.rowStyle)},[_vm._t("default")],2)}
-var staticRenderFns = []
-
-          return {
-            render: render,
-            staticRenderFns: staticRenderFns,
-            _compiled: true,
-            _scopeId: "data-v-d239e7",
-            functional: undefined
-          };
-        })());
-      
-},{}],"sOCM":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-//
-//
-//
-//
-//
-var validator = function validator(value) {
-  var keys = Object.keys(value);
-  var valid = true;
-  keys.forEach(function (key) {
-    if (!['span', 'offset'].includes(key)) {
-      valid = false;
-    }
-  });
-  return valid;
-};
-
-var _default = {
-  name: 'GuluCol',
-  props: {
-    span: {
-      type: [Number, String]
-    },
-    offset: {
-      type: [Number, String]
-    },
-    ipad: {
-      type: Object,
-      validator: validator
-    },
-    narrowPc: {
-      type: Object,
-      validator: validator
-    },
-    pc: {
-      type: Object,
-      validator: validator
-    },
-    widePc: {
-      type: Object,
-      validator: validator
-    }
-  },
-  data: function data() {
-    return {
-      gutter: 0
-    };
   },
   methods: {
-    createClasses: function createClasses(obj) {
-      var str = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+    updateStyles: function updateStyles() {
+      var _this = this;
 
-      if (!obj) {
-        return [];
-      }
-
-      var array = [];
-
-      if (obj.span) {
-        array.push("col-".concat(str).concat(obj.span));
-      }
-
-      if (obj.offset) {
-        array.push("offset-".concat(str).concat(obj.offset));
-      }
-
-      return array;
-    }
-  },
-  computed: {
-    colClass: function colClass() {
-      var span = this.span,
-          offset = this.offset,
-          ipad = this.ipad,
-          narrowPc = this.narrowPc,
-          pc = this.pc,
-          widePc = this.widePc;
-      var createClasses = this.createClasses;
-      return [].concat(_toConsumableArray(createClasses({
-        span: span,
-        offset: offset
-      })), _toConsumableArray(createClasses(ipad, 'ipad-')), _toConsumableArray(createClasses(narrowPc, 'narrow-pc-')), _toConsumableArray(createClasses(pc, 'pc-')), _toConsumableArray(createClasses(widePc, 'wide-pc-')));
+      this.$nextTick(function () {
+        _this.$refs.line.style.height = "".concat(_this.$refs.toast.getBoundingClientRect().height, "px");
+      });
     },
-    colStyle: function colStyle() {
-      return {
-        paddingLeft: this.gutter / 2 + 'px',
-        paddingRight: this.gutter / 2 + 'px'
-      };
+    execAutoClose: function execAutoClose() {
+      var _this2 = this;
+
+      if (this.autoClose) {
+        setTimeout(function () {
+          _this2.close();
+        }, this.autoClose * 1000);
+      }
+    },
+    close: function close() {
+      this.$el.remove();
+      this.$emit('close');
+      this.$destroy();
+    },
+    log: function log() {
+      console.log('测试');
+    },
+    onClickClose: function onClickClose() {
+      this.close();
+
+      if (this.closeButton && typeof this.closeButton.callback === 'function') {
+        this.closeButton.callback(this);
+      }
     }
   }
 };
-exports.default = _default;
-        var $5f4ba3 = exports.default || module.exports;
+exports.default = _default2;
+        var $11b4f8 = exports.default || module.exports;
       
-      if (typeof $5f4ba3 === 'function') {
-        $5f4ba3 = $5f4ba3.options;
+      if (typeof $11b4f8 === 'function') {
+        $11b4f8 = $11b4f8.options;
       }
     
         /* template */
-        Object.assign($5f4ba3, (function () {
-          var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"col",class:_vm.colClass,style:(_vm.colStyle)},[_vm._t("default")],2)}
+        Object.assign($11b4f8, (function () {
+          var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"wrapper",class:_vm.toastClasses},[_c('div',{ref:"toast",staticClass:"toast"},[_c('div',{staticClass:"message"},[(!_vm.enableHtml)?_vm._t("default"):_c('div',{domProps:{"innerHTML":_vm._s(_vm.$slots.default[0])}})],2),_vm._v(" "),_c('div',{ref:"line",staticClass:"line"}),_vm._v(" "),(_vm.closeButton)?_c('span',{staticClass:"close",on:{"click":_vm.onClickClose}},[_vm._v("\n        "+_vm._s(_vm.closeButton.text)+"\n      ")]):_vm._e()])])}
 var staticRenderFns = []
 
           return {
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-5f4ba3",
+            _scopeId: "data-v-11b4f8",
             functional: undefined
           };
         })());
       
-},{}],"FIP2":[function(require,module,exports) {
+},{}],"jRN6":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));
 
-var _row = _interopRequireDefault(require("../src/row"));
-
-var _col = _interopRequireDefault(require("../src/col"));
+var _toast = _interopRequireDefault(require("../src/toast"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var expect = chai.expect;
 _vue.default.config.productionTip = false;
 _vue.default.config.devtools = false;
-describe('Col', function () {
+describe('Toast', function () {
   it('存在.', function () {
-    expect(_row.default).to.be.exist;
+    expect(_toast.default).to.be.ok;
   });
-  it('接收span属性', function () {
-    var div = document.createElement('div');
-    document.body.appendChild(div);
+  describe('props', function () {
+    it('接收autoClose', function (done) {
+      var div = document.createElement('div');
+      document.body.appendChild(div);
 
-    var Constructor = _vue.default.extend(_col.default);
+      var Constructor = _vue.default.extend(_toast.default);
 
-    var vm = new Constructor({
-      propsData: {
-        span: 1
-      }
-    }).$mount(div);
-    var element = vm.$el;
-    expect(vm.$el.classList.contains('col-1')).to.equal(true);
-    div.remove();
-    vm.$destroy();
-  });
-  it('接收 offset 属性', function () {
-    var div = document.createElement('div');
-    document.body.appendChild(div);
-
-    var Constructor = _vue.default.extend(_col.default);
-
-    var vm = new Constructor({
-      propsData: {
-        offset: 1
-      }
-    }).$mount(div);
-    var element = vm.$el;
-    expect(vm.$el.classList.contains('offset-1')).to.eq(true);
-    div.remove();
-    vm.$destroy();
-  });
-  it('接收 ipad 属性', function () {
-    var div = document.createElement('div');
-    document.body.appendChild(div);
-
-    var Constructor = _vue.default.extend(_col.default);
-
-    var vm = new Constructor({
-      propsData: {
-        ipad: {
-          span: 1,
-          offset: 2
+      var vm = new Constructor({
+        propsData: {
+          autoClose: true,
+          autoCloseDelay: 1
         }
-      }
-    }).$mount(div);
-    var element = vm.$el;
-    expect(vm.$el.classList.contains('col-ipad-1')).to.eq(true);
-    expect(vm.$el.classList.contains('offset-ipad-2')).to.eq(true);
-    div.remove();
-    vm.$destroy();
-  });
-  it('接收 pc 属性', function () {
-    var div = document.createElement('div');
-    document.body.appendChild(div);
+      }).$mount(div);
+      vm.$on('close', function () {
+        expect(document.body.contains(vm.$el)).to.eq(false);
+        done();
+      });
+    });
+    it('接收closeButton', function () {
+      var callback = sinon.fake();
 
-    var Constructor = _vue.default.extend(_col.default);
+      var Constructor = _vue.default.extend(_toast.default);
 
-    var vm = new Constructor({
-      propsData: {
-        pc: {
-          span: 1,
-          offset: 2
+      var vm = new Constructor({
+        propsData: {
+          closeButton: {
+            text: '关闭吧',
+            callback: callback
+          }
         }
-      }
-    }).$mount(div);
-    var element = vm.$el;
-    expect(vm.$el.classList.contains('col-pc-1')).to.eq(true);
-    expect(vm.$el.classList.contains('offset-pc-2')).to.eq(true);
-    div.remove();
-    vm.$destroy();
-  });
-  it('接收 narrowPc 属性', function () {
-    var div = document.createElement('div');
-    document.body.appendChild(div);
+      }).$mount();
+      var closeButton = vm.$el.querySelector('.close');
+      expect(closeButton.textContent.trim()).to.eq('关闭吧');
+      closeButton.click();
+      expect(callback).to.have.been.called;
+    });
+    it('接收enableHTML', function () {
+      var Constructor = _vue.default.extend(_toast.default);
 
-    var Constructor = _vue.default.extend(_col.default);
-
-    var vm = new Constructor({
-      propsData: {
-        narrowPc: {
-          span: 1,
-          offset: 2
+      var vm = new Constructor({
+        propsData: {
+          enableHtml: true
         }
-      }
-    }).$mount(div);
-    var element = vm.$el;
-    expect(vm.$el.classList.contains('col-narrow-pc-1')).to.eq(true);
-    expect(vm.$el.classList.contains('offset-narrow-pc-2')).to.eq(true);
-    div.remove();
-    vm.$destroy();
-  });
-  it('接收 wide-pc 属性', function () {
-    var div = document.createElement('div');
-    document.body.appendChild(div);
+      });
+      vm.$slots.default = ['<strong id="test">hi</strong>'];
+      vm.$mount();
+      var strong = vm.$el.querySelector('#test');
+      expect(strong).to.exist;
+    });
+    it('接收position', function () {
+      var Constructor = _vue.default.extend(_toast.default);
 
-    var Constructor = _vue.default.extend(_col.default);
-
-    var vm = new Constructor({
-      propsData: {
-        widePc: {
-          span: 1,
-          offset: 2
+      var vm = new Constructor({
+        propsData: {
+          position: 'bottom'
         }
-      }
-    }).$mount(div);
-    var element = vm.$el;
-    expect(vm.$el.classList.contains('col-wide-pc-1')).to.eq(true);
-    expect(vm.$el.classList.contains('offset-wide-pc-2')).to.eq(true);
-    div.remove();
-    vm.$destroy();
+      }).$mount();
+      expect(vm.$el.classList.contains('position-bottom')).to.eq(true);
+    });
   });
 });
-},{"vue":"ApMz","../src/row":"rWcA","../src/col":"sOCM"}]},{},["FIP2"], null)
-//# sourceMappingURL=/col.test.js.map
+},{"vue":"ApMz","../src/toast":"dgLN"}]},{},["jRN6"], null)
+//# sourceMappingURL=/toast.test.js.map
