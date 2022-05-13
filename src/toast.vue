@@ -39,12 +39,12 @@ export default {
                 type:Boolean,
                 default:false
         },
-        position:{
-            type:String,
-            default:'top',
-            validator(value){
-                return ['top','bottom','middle'].indexOf(value)>=0
-            }
+        position: {
+        type: String,
+        default: 'top',
+        validator (value) {
+          return ['top', 'bottom', 'middle'].indexOf(value) >= 0
+        }
         }
     },
     created(){
@@ -78,6 +78,7 @@ export default {
         },
         close(){
             this.$el.remove()
+            this.$emit('close')
             this.$destroy()
         },
         onClickClose(){
@@ -99,10 +100,15 @@ export default {
 $font-size:14px;
 $toast-min-height:40px;
 $toast-bg:rgba(0,0,0,0.75);
+@keyframes fade-in{
+    0% {opacity: 0; transform: translateY(100%);}
+    100% {opacity: 1; transform: translateY(0%)}
+}
     .toast{
+        animation: fade-in 1s;
         font-size: $font-size;
         line-height: 1.8;
-        height: $toast-min-height;
+        min-height: $toast-min-height;
         position: fixed;
         display: flex;
         align-items: center;
@@ -125,18 +131,17 @@ $toast-bg:rgba(0,0,0,0.75);
         padding: 8px 0;
     }
 
-    &.position-top{
-        transform:translateX(-50%);
-        top: 0;
+     &.position-top{
+      top: 0;
+      transform: translateX(-50%);
     }
     &.position-bottom{
-        transform:translateX(-50%);
-        bottom :0;
+      bottom: 0;
+      transform: translateX(-50%);
     }
-
     &.position-middle{
-        transform:translate(-50%,-50%);
-        top:50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
     }
     

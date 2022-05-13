@@ -48,10 +48,10 @@ new Vue({
             this.$toast('文字', {
                 position: 'bottom',
                 enableHtml: false,
+
                 closeButton: {
                     text: '关闭',
                     callback() {
-
                     }
                 },
                 autoClose: false,
