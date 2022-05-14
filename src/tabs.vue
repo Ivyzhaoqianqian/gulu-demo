@@ -34,9 +34,9 @@ export default{
     mounted(){
         this.$children.forEach((vm) => {
             if(vm.$options.name === 'GuluTabsHead'){
-                vm.$children.forEach((item) =>{
-                    if(item.$options.name === 'GuluTabsIem' && item.name === this.selected){
-                        this.eventBus.$emit('update:selected',this.selected,item)
+                vm.$children.forEach((childVm) =>{
+                    if(childVm.$options.name === 'GuluTabsIem' && childVm.name === this.selected){
+                        this.eventBus.$emit('update:selected',this.selected,childVm)
                     }
                 })
             }
