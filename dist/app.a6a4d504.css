@@ -966,6 +966,9 @@
   font-weight: bold;
   color: lightblue;
 }
+.tabs-item.disabled[data-v-e342f2] {
+  color: grey;
+}
 .tabs-head[data-v-0b0332] {
   display: flex;
   height: 40px;
