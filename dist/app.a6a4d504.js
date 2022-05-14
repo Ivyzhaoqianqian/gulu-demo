@@ -13705,6 +13705,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _vue = _interopRequireDefault(require("vue"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 //
 //
 //
@@ -13726,7 +13731,19 @@ var _default = {
       }
     }
   },
-  created: function created() {}
+  data: function data() {
+    return {
+      eventBus: new _vue.default()
+    };
+  },
+  provide: function provide() {
+    return {
+      eventBus: this.eventBus
+    };
+  },
+  mounted: function mounted() {
+    this.eventBus.$emit('update:selected', this.selected);
+  }
 };
 exports.default = _default;
         var $7719b0 = exports.default || module.exports;
@@ -13776,22 +13793,59 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.common.js"}],"src/tabs-pane.vue":[function(require,module,exports) {
+},{"vue":"node_modules/vue/dist/vue.common.js","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js"}],"src/tabs-pane.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _name$inject$name$pro;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
 //
 //
 //
-var _default = {
-  name: 'GuluTabsPane'
-};
+var _default = (_name$inject$name$pro = {
+  name: 'GuluTabsPane',
+  inject: ['eventBus']
+}, _defineProperty(_name$inject$name$pro, "name", 'GuluTabsItem'), _defineProperty(_name$inject$name$pro, "props", {
+  disable: {
+    type: Boolean,
+    default: false
+  },
+  name: {
+    type: String,
+    Number: Number,
+    require: true
+  }
+}), _defineProperty(_name$inject$name$pro, "data", function data() {
+  return {
+    active: false
+  };
+}), _defineProperty(_name$inject$name$pro, "computed", {
+  classes: function classes() {
+    return {
+      active: this.active
+    };
+  }
+}), _defineProperty(_name$inject$name$pro, "created", function created() {
+  var _this = this;
+
+  this.eventBus.$on('update:selected', function (name) {
+    if (name === _this.name) {
+      _this.active = true;
+    } else {
+      _this.active = false;
+    }
+  });
+}), _name$inject$name$pro);
+
 exports.default = _default;
         var $cf0671 = exports.default || module.exports;
       
@@ -13805,7 +13859,14 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "tabs-pane" }, [_vm._t("default")], 2)
+  return _vm.active
+    ? _c(
+        "div",
+        { staticClass: "tabs-pane", class: _vm.classes },
+        [_vm._t("default")],
+        2
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -13854,7 +13915,9 @@ exports.default = void 0;
 //
 //
 var _default = {
-  name: 'GuluTabsBody'
+  name: 'GuluTabsBody',
+  inject: ['eventBus'],
+  created: function created() {}
 };
 exports.default = _default;
         var $1c49e7 = exports.default || module.exports;
@@ -13919,10 +13982,44 @@ exports.default = void 0;
 //
 var _default = {
   name: 'GuluTabsItem',
+  inject: ['eventBus'],
+  data: function data() {
+    return {
+      active: false
+    };
+  },
   props: {
     disable: {
       type: Boolean,
       default: false
+    },
+    name: {
+      type: String,
+      Number: Number,
+      require: true
+    }
+  },
+  computed: {
+    classes: function classes() {
+      return {
+        active: this.active
+      };
+    }
+  },
+  created: function created() {
+    var _this = this;
+
+    this.eventBus.$on('update:selected', function (name) {
+      if (name === _this.name) {
+        _this.active = true;
+      } else {
+        _this.active = false;
+      }
+    });
+  },
+  methods: {
+    xxx: function xxx() {
+      this.eventBus.$emit('update:selected', this.name);
     }
   }
 };
@@ -13939,7 +14036,12 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "tabs-item" }, [_vm._t("default")], 2)
+  return _c(
+    "div",
+    { staticClass: "tabs-item", class: _vm.classes, on: { click: _vm.xxx } },
+    [_vm._t("default")],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -13988,8 +14090,15 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
 var _default = {
-  name: 'GuluTabsHead'
+  name: 'GuluTabsHead',
+  inject: ['eventBus'],
+  created: function created() {
+    this.$emit('update:selected', 'tabs-head 抛出的数据');
+  }
 };
 exports.default = _default;
         var $0b0332 = exports.default || module.exports;
@@ -14007,7 +14116,11 @@ exports.default = _default;
   return _c(
     "div",
     { staticClass: "tabs-head" },
-    [_vm._t("default"), _vm._v(" "), _vm._t("actions")],
+    [
+      _vm._t("default"),
+      _vm._v(" "),
+      _c("div", { staticClass: "actions-wrapper" }, [_vm._t("actions")], 2),
+    ],
     2
   )
 }
