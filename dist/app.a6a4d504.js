@@ -13742,7 +13742,17 @@ var _default = {
     };
   },
   mounted: function mounted() {
-    this.eventBus.$emit('update:selected', this.selected);
+    var _this = this;
+
+    this.$children.forEach(function (vm) {
+      if (vm.$options.name === 'GuluTabsHead') {
+        vm.$children.forEach(function (item) {
+          if (item.$options.name === 'GuluTabsIem' && item.name === _this.selected) {
+            _this.eventBus.$emit('update:selected', _this.selected, item);
+          }
+        });
+      }
+    });
   }
 };
 exports.default = _default;
@@ -14019,7 +14029,7 @@ var _default = {
   },
   methods: {
     xxx: function xxx() {
-      this.eventBus.$emit('update:selected', this.name);
+      this.eventBus.$emit('update:selected', this.name, this);
     }
   }
 };
@@ -14093,11 +14103,12 @@ exports.default = void 0;
 //
 //
 //
+//
 var _default = {
   name: 'GuluTabsHead',
   inject: ['eventBus'],
   created: function created() {
-    this.$emit('update:selected', 'tabs-head 抛出的数据');
+    this.eventBus.$on();
   }
 };
 exports.default = _default;
@@ -14118,6 +14129,8 @@ exports.default = _default;
     { staticClass: "tabs-head" },
     [
       _vm._t("default"),
+      _vm._v(" "),
+      _c("div", { ref: "line", staticClass: "line" }),
       _vm._v(" "),
       _c("div", { staticClass: "actions-wrapper" }, [_vm._t("actions")], 2),
     ],

@@ -956,7 +956,6 @@
 }
 .tabs-item[data-v-e342f2] {
   flex-shrink: 0;
-  border: 1px solid black;
   padding: 0 1em;
   cursor: pointer;
   height: 100%;
@@ -964,13 +963,21 @@
   align-items: center;
 }
 .tabs-item.active[data-v-e342f2] {
-  background-color: red;
+  font-weight: bold;
+  color: lightblue;
 }
 .tabs-head[data-v-0b0332] {
   display: flex;
   height: 40px;
   justify-content: flex-start;
   align-content: center;
+  position: relative;
+}
+.tabs-head > .line[data-v-0b0332] {
+  position: absolute;
+  bottom: 0;
+  border-bottom: 1px solid lightblue;
+  width: 100px;
 }
 .tabs-head > .actions-wrapper[data-v-0b0332] {
   margin-left: auto;
