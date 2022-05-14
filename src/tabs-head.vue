@@ -13,8 +13,13 @@
 export default{
     name:'GuluTabsHead',
     inject:['eventBus'],
-    created(){
-        this.eventBus.$on()
+    
+    mounted(){
+        this.eventBus.$on('update:selected',(item,vm) =>{
+            let {width, height, top, left} = vm.$el.getBoundingClientRect()
+        this.$refs.line.style.width = `${width}px`
+        this.$refs.line.style.left = `${left}px`
+        })
     }
 }
 </script>
@@ -26,13 +31,12 @@ $blue:lightblue;
         display: flex;
         height: $tab-height;
         justify-content: flex-start;
-        align-content: center;
         position: relative;
     > .line{
         position: absolute;
         bottom: 0;
-        border-bottom:1px solid $blue;
-        width: 100px;
+        border-bottom:1.5px solid $blue;
+        transition:all 350ms;
         
     }
     > .actions-wrapper{

@@ -50,7 +50,7 @@ export default{
 
 .tabs-pane{
 &.active{
-            background-color: red;
+         
         }
 }
 
