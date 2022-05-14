@@ -20,16 +20,12 @@ export default {
     name:'GuleToast',
     props:{
         autoClose:{
-            type:[Boolean,Number],
-            default:5,
-            validator(value){
-                if(value === false || typeof value === 'number'){
-                    return true
-                }else{
-                    return false
-                }
-            }
-        },
+             type: [Boolean, Number],
+        default: 5,
+        validator (value) {
+          return value === false || typeof value === 'number';
+        }
+      },
         closeButton:{
             type:Object,
             default:()=>{

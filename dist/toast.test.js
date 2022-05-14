@@ -165,11 +165,7 @@ var _default2 = {
       type: [Boolean, Number],
       default: 5,
       validator: function validator(value) {
-        if (value === false || typeof value === 'number') {
-          return true;
-        } else {
-          return false;
-        }
+        return value === false || typeof value === 'number';
       }
     },
     closeButton: {
@@ -277,7 +273,7 @@ describe('Toast', function () {
     expect(_toast.default).to.be.ok;
   });
   describe('props', function () {
-    it('接收autoClose', function (done) {
+    it('接受 autoClose', function (done) {
       var div = document.createElement('div');
       document.body.appendChild(div);
 
@@ -285,8 +281,7 @@ describe('Toast', function () {
 
       var vm = new Constructor({
         propsData: {
-          autoClose: true,
-          autoCloseDelay: 1
+          autoClose: 1
         }
       }).$mount(div);
       vm.$on('close', function () {
@@ -294,7 +289,7 @@ describe('Toast', function () {
         done();
       });
     });
-    it('接收closeButton', function () {
+    it('接受 closeButton', function () {
       var callback = sinon.fake();
 
       var Constructor = _vue.default.extend(_toast.default);
@@ -312,7 +307,7 @@ describe('Toast', function () {
       closeButton.click();
       expect(callback).to.have.been.called;
     });
-    it('接收enableHTML', function () {
+    it('接受 enableHtml', function () {
       var Constructor = _vue.default.extend(_toast.default);
 
       var vm = new Constructor({
@@ -325,7 +320,7 @@ describe('Toast', function () {
       var strong = vm.$el.querySelector('#test');
       expect(strong).to.exist;
     });
-    it('接收position', function () {
+    it('接受 position', function () {
       var Constructor = _vue.default.extend(_toast.default);
 
       var vm = new Constructor({

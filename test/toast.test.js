@@ -12,14 +12,13 @@ describe('Toast', () => {
 
 
     describe('props', function () {
-        it('接收autoClose', (done) => {
+        it('接受 autoClose', (done) => {
             let div = document.createElement('div')
             document.body.appendChild(div)
             const Constructor = Vue.extend(Toast)
             const vm = new Constructor({
                 propsData: {
-                    autoClose: true,
-                    autoCloseDelay: 1
+                    autoClose: 1,
                 }
             }).$mount(div)
             vm.$on('close', () => {
@@ -27,8 +26,8 @@ describe('Toast', () => {
                 done()
             })
         })
-        it('接收closeButton', () => {
-            const callback = sinon.fake()
+        it('接受 closeButton', () => {
+            const callback = sinon.fake();
             const Constructor = Vue.extend(Toast)
             const vm = new Constructor({
                 propsData: {
@@ -45,7 +44,7 @@ describe('Toast', () => {
             expect(callback).to.have.been.called
         })
 
-        it('接收enableHTML', () => {
+        it('接受 enableHtml', () => {
             const Constructor = Vue.extend(Toast)
             const vm = new Constructor({
                 propsData: { enableHtml: true }
@@ -55,7 +54,8 @@ describe('Toast', () => {
             let strong = vm.$el.querySelector('#test')
             expect(strong).to.exist
         })
-        it('接收position', () => {
+
+        it('接受 position', () => {
             const Constructor = Vue.extend(Toast)
             const vm = new Constructor({
                 propsData: {
@@ -65,4 +65,4 @@ describe('Toast', () => {
             expect(vm.$el.classList.contains('position-bottom')).to.eq(true)
         })
     })
-})
+}) 
