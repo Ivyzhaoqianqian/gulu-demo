@@ -332,6 +332,22 @@ describe('Popover', function () {
       });
     });
   });
+  it('可以设置trigger', function () {
+    _vue.default.component('g-popover', _popover.default);
+
+    var div = document.createElement('div');
+    document.body.appendChild(div);
+    div.innerHTML = "\n            <g-popover position=\"bottom\" ref=\"a\">\n                <template slot=\"content\">\n                    \u5F39\u51FA\u5185\u5BB9\n                </template>\n                <button>\u70B9\u6211</button>\n            </g-popover>\n        ";
+    var vm = new _vue.default({
+      el: div
+    });
+    vm.$el;
+    var event = new Event('mouseenter');
+    vm.$el.dispatchEvent(event);
+    vm.$nextTick(function () {
+      expect(vm.$refs.a.$refs).to.be.exist;
+    });
+  });
 });
 },{"vue":"ApMz","../src/popover":"gkB5"}]},{},["cMDE"], null)
 //# sourceMappingURL=/popover.test.js.map
