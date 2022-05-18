@@ -53,10 +53,7 @@ const h = createElement
 new Vue({
     el: '#app',
     data: {
-        loading1: false,
-        loading2: true,
-        loading3: false,
-        message: 'hi'
+        selectedTab: ['2', '1']
     },
     created() {
 
